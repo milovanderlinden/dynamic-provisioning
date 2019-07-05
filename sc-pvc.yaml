@@ -1,0 +1,22 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: base
+provisioner: openstack.org/standalone-cinder
+parameters:
+  availability: nova
+  type: iscsi
+reclaimPolicy: Delete
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: base-claim
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: base
+  resources:
+    requests:
+      storage: 1Gi
